@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tìm kiếm danh mục</title>
+    <title>Tìm kiếm tin tức</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -27,7 +27,7 @@
 <body class="with-welcome-text">
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
-        <?= require_once './admin/navbar.php' ?> 
+        <?= require_once './admin/navbar.php' ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper" style="padding-top: 75px !important;">
             <!-- partial:partials/_settings-panel.html -->
@@ -46,19 +46,19 @@
             </div>
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
-            <?php require './admin/sidebar.php'?>
+            <?php require './admin/sidebar.php' ?>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="row">
-                        <div class="col-lg-9 m-auto grid-margin stretch-card">
+                        <div class="col-lg-12 m-auto grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <a href="?act=themdanhmuc" class="btn btn-success px-3 py-2 mb-3">Thêm danh mục</a>
+                                    <a href="?act=themtintuc" class="btn btn-success px-3 py-2 mb-3">Thêm tin tức</a>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h4 class="card-title text-uppercase">Danh sách danh mục</h4>
+                                        <h4 class="card-title text-uppercase">Danh sách tin tức</h4>
                                         <div class="d-flex">
-                                            <form action="?act=timkiemdanhmuc" method="post">
+                                            <form action="?act=timkiemtintuc" method="post">
                                                 <div class="form-group d-flex justify-content-end">
                                                     <input type="text" name="keyword" placeholder="Tìm kiếm" id="" class="form-control w-50 me-1">
                                                     <button type="submit" class="btn btn-primary px-3 py-2">Tìm kiếm</button>
@@ -66,43 +66,53 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <!-- Xử lý phần danh sách danh mục -->
+                                    <!-- Xử lý phần danh sách tin tức -->
                                     <?php
-                                        $sql = "SELECT * FROM danhmuc WHERE ten_danh_muc LIKE '%".strtolower($_POST['keyword'])."%'";
-                                        $result = mysqli_query($conn,$sql);
+                                    $sql = "SELECT * FROM tintuc WHERE tieu_de_tin_tuc LIKE '%" . strtolower($_POST['keyword']) . "%'"; // tim kiem theo tieu de
+                                    $result = mysqli_query($conn, $sql);
                                     ?>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>STT</th>
-                                                    <th>Tên danh mục</th>
-                                                    <th>Thuộc danh mục</th>
+                                                    <th>Ảnh</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Danh mục</th>
+                                                    <th>Sapo</th>
+                                                    <th>Nội dung</th>
+                                                    <th>Lượt xem</th>
+                                                    <th>Tin nóng</th>
                                                     <th>Chức năng</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    $i = 0;
-                                                    while($row = mysqli_fetch_assoc($result)){
-                                                        $i++;
-                                                        //phần này sẽ truy vấn lấy thông tin danh mục cha nếu danh mục con có danh mục cha cha có (đó là id_cha_danh_muc != 0)
-                                                        $sqlCha = "SELECT * FROM danhmuc WHERE id_danh_muc = ".$row['id_cha_danh_muc'];
-                                                        $resultCha = mysqli_query($conn,$sqlCha);
-                                                        $rowCha = mysqli_fetch_assoc($resultCha);
+                                                $i = 0;
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    $i++;
+                                                    //phần này sẽ truy vấn lấy thông tin danh muc
+                                                    $sqlCha = "SELECT * FROM danhmuc WHERE id_danh_muc = " . $row['id_danh_muc'];
+                                                    $resultCha = mysqli_query($conn, $sqlCha);
+                                                    $rowCha = mysqli_fetch_assoc($resultCha);
                                                 ?>
-                                                <tr>
-                                                    <!-- $row: se tra ve 1 mang du lieu tu db, ['ten_danh_muc'] thì ten_danh_muc thì xem trên database trên phpmyadmin nhé -->
-                                                    <td><?=$i?></td>
-                                                    <td><?=$row['ten_danh_muc']?></td>
-                                                    <td><?=$rowCha['ten_danh_muc'] ? $rowCha['ten_danh_muc'] : 'Không có'?></td>
-                                                    <td>
-                                                        <a href="?act=suadanhmuc&id=<?=$row['id_danh_muc']?>" class="badge badge-success text-decoration-none me-3">Sửa</a>
-                                                        <a href="?act=xoadanhmuc&id=<?=$row['id_danh_muc']?>" class="badge badge-danger text-decoration-none">Xóa</a>
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <!-- $row: se tra ve 1 mang du lieu tu db, ['ten_tin_tuc'] thì ten_tin_tuc thì xem trên database trên phpmyadmin nhé -->
+                                                        <td><?= $i ?></td>
+                                                        <td><img class="image-table" src="./image/<?= $row['anh_tin_tuc'] ?>" width="200" height="150" alt=""></td>
+                                                        <td><?= $row['tieu_de_tin_tuc'] ?></td>
+                                                        <td><?= $rowCha['ten_danh_muc'] ? $rowCha['ten_danh_muc'] : 'Không có' ?></td>
+                                                        <td><?= $row['sapo_tin_tuc'] ?></td>
+                                                        <td><?= $row['noi_dung_tin_tuc'] ?></td>
+                                                        <td><span class="badge badge-primary"><?= $row['luot_xem'] ?></span></td>
+                                                        <td><span class="badge badge-danger"><?= $row['tin_nong'] ? 'Có' : 'Không' ?></span></td>
+                                                        <td>
+                                                            <a href="?act=suatintuc&id=<?= $row['id_tin_tuc'] ?>" class="badge badge-success text-decoration-none me-3">Sửa</a>
+                                                            <a href="?act=xoatintuc&id=<?= $row['id_tin_tuc'] ?>" class="badge badge-danger text-decoration-none">Xóa</a>
+                                                        </td>
+                                                    </tr>
                                                 <?php
-                                                    }
+                                                }
                                                 ?>
                                             </tbody>
                                         </table>

@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Thêm danh mục</title>
+    <title>Danh sách tin tức</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="assets/vendors/feather/feather.css">
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -26,8 +26,9 @@
 
 <body class="with-welcome-text">
     <div class="container-scroller">
-        <!-- lấy nội dung từ file navbar.php -->
+        <!-- partial:partials/_navbar.html -->
         <?= require_once './admin/navbar.php' ?> 
+
         <!-- partial -->
         <div class="container-fluid page-body-wrapper" style="padding-top: 75px !important;">
             <!-- partial:partials/_settings-panel.html -->
@@ -48,59 +49,75 @@
             <!-- partial:partials/_sidebar.html -->
             <?php require './admin/sidebar.php'?>
             <!-- partial -->
-            <?php
-                // Xử lý logic
-                // <!-- Xử lý lấy danh mục cha (trường hợp id_cha_danh_muc = 0) -->
-                $sqlCha = "SELECT * FROM danhmuc WHERE id_cha_danh_muc = 0";
-                $resultCha = mysqli_query($conn,$sqlCha);
-                // Xử lý thêm danh mục
-                // Đầu tiên lấy thông tin vừa được gửi lên server (qua phương thức POST)
-                if(isset($_POST['themdanhmuc'])){ // check phuong thuc POST có tồn tại không và $_POST['themdanhmuc'] có tồn tại k (themdanhmuc là cái name ở nút button Xác nhận)
-                    $ten_danh_muc = $_POST['ten_danh_muc']; // những thứ trong $_POST chính là cái name của thẻ input   
-                    $id_cha_danh_muc = $_POST['id_cha_danh_muc'];
-                    if($ten_danh_muc == ''){ //kiem tra ten danh muc co bi trong khong
-                        $err_ten_danh_muc = 'Không được để trống';
-                    }else{
-                        $insert = "INSERT INTO `danhmuc` VALUES ('','$ten_danh_muc',$id_cha_danh_muc)"; //truy van them danh muc
-                        $resultInsert = mysqli_query($conn,$insert);
-                        if($resultInsert){ // kiem tra da truy van dung chua
-                            echo '<script>alert("Thêm thành công")</script>';
-                            echo '<script>location.href="?act=danhsachdanhmuc"</script>';
-                        }
-                    }
-                }
-            ?>
             <div class="main-panel">
                 <div class="content-wrapper">
                     <div class="row">
-                        <div class="col-md-9 m-auto grid-margin stretch-card">
+                        <div class="col-lg-12 m-auto grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title">Thêm danh mục</h4>
-                                    <!-- a sẽ thêm danh mục thông qua form với phương thức là POST (gửi dữ liệu lên server) -->
-                                    <form class="forms-sample" method="POST">
-                                        <div class="form-group">
-                                            <label for="exampleInputUsername1">Tên danh mục</label>
-                                            <input type="text" class="form-control" name="ten_danh_muc" require id="exampleInputUsername1" placeholder="Nhập tên danh mục">
-                                            <p class="text-danger fs-6 mt-2">
-                                                <?= isset($err_ten_danh_muc) && $err_ten_danh_muc ? $err_ten_danh_muc : '' ?>
-                                            </p>
+                                    <a href="?act=themtintuc" class="btn btn-success px-3 py-2 mb-3">Thêm tin tức</a>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h4 class="card-title text-uppercase">Danh sách tin tức</h4>
+                                        <div class="d-flex">
+                                            <form action="?act=timkiemtintuc" method="post">
+                                                <div class="form-group d-flex justify-content-end">
+                                                    <input type="text" name="keyword" placeholder="Tìm kiếm" id="" class="form-control w-50 me-1">
+                                                    <button type="submit" class="btn btn-primary px-3 py-2">Tìm kiếm</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Thuộc danh mục</label>
-                                            <select name="id_cha_danh_muc" id="" class="form-select" require>
-                                                <option value="0">Danh mục cha</option>
+                                    </div>
+                                    <!-- Xử lý phần danh sách tin tức -->
+                                    <?php
+                                        $sql = "SELECT * FROM tintuc";
+                                        $result = mysqli_query($conn,$sql);
+                                    ?>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Ảnh</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Danh mục</th>
+                                                    <th>Sapo</th>
+                                                    <th>Nội dung</th>
+                                                    <th>Lượt xem</th>
+                                                    <th>Tin nóng</th>
+                                                    <th>Chức năng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 <?php
-                                                    while($rowCha = mysqli_fetch_assoc($resultCha)){
+                                                    $i = 0;
+                                                    while($row = mysqli_fetch_assoc($result)){
+                                                        $i++;
+                                                        //phần này sẽ truy vấn lấy thông tin danh muc
+                                                        $sqlCha = "SELECT * FROM danhmuc WHERE id_danh_muc = ".$row['id_danh_muc'];
+                                                        $resultCha = mysqli_query($conn,$sqlCha);
+                                                        $rowCha = mysqli_fetch_assoc($resultCha);
                                                 ?>
-                                                <option value="<?=$rowCha['id_danh_muc']?>"><?=$rowCha['ten_danh_muc']?></option>
+                                                <tr>
+                                                    <!-- $row: se tra ve 1 mang du lieu tu db, ['ten_tin_tuc'] thì ten_tin_tuc thì xem trên database trên phpmyadmin nhé -->
+                                                    <td><?=$i?></td>
+                                                    <td><img class="image-table" src="./image/<?=$row['anh_tin_tuc']?>" width="200" height="150" alt=""></td>
+                                                    <td><?=$row['tieu_de_tin_tuc']?></td>
+                                                    <td><?=$rowCha['ten_danh_muc'] ? $rowCha['ten_danh_muc'] : 'Không có'?></td>
+                                                    <td><?=$row['sapo_tin_tuc']?></td>
+                                                    <td><?=$row['noi_dung_tin_tuc']?></td>
+                                                    <td><span class="badge badge-primary"><?=$row['luot_xem']?></span></td>
+                                                    <td><span class="badge badge-danger"><?=$row['tin_nong'] ? 'Có' : 'Không'?></span></td>
+                                                    <td>
+                                                        <a href="?act=suatintuc&id=<?=$row['id_tin_tuc']?>" class="badge badge-success text-decoration-none me-3">Sửa</a>
+                                                        <a href="?act=xoatintuc&id=<?=$row['id_tin_tuc']?>" class="badge badge-danger text-decoration-none">Xóa</a>
+                                                    </td>
+                                                </tr>
                                                 <?php
                                                     }
                                                 ?>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary me-2" name="themdanhmuc">Xác nhận</button>
-                                    </form>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -143,6 +160,7 @@
     <script src="assets/js/proBanner.js"></script>
     <!-- <script src="../assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
+    
 </body>
 
 </html>
