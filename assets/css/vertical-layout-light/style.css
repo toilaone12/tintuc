@@ -30980,3 +30980,31 @@ div.tagsinput span.tag a {
   object-fit: cover;
   border-radius: 2px !important;
 }
+.text-clamp-2 {
+  overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số dòng bạn muốn hiển thị */
+    -webkit-box-orient: vertical;
+}
+.text-clamp-3 {
+  overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Số dòng bạn muốn hiển thị */
+    -webkit-box-orient: vertical;
+}
+.text-clamp-4 {
+  overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Số dòng bạn muốn hiển thị */
+    -webkit-box-orient: vertical;
+}
+.text-clamp-5 {
+  overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Số dòng bạn muốn hiển thị */
+    -webkit-box-orient: vertical;
+}

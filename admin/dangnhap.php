@@ -38,7 +38,7 @@
             $sql = "SELECT * FROM quantri WHERE ten_tai_khoan = '$username' and mat_khau = '$md5_password' LIMIT 1";
             // var_dump($sql); die;
             $result = mysqli_query($conn,$sql);
-            if($result){
+            if($result && $result->num_rows){
                 $row = mysqli_fetch_assoc($result);
                 setcookie('id_quan_tri', $row['id_quan_tri'], time() + (365 * 24 * 60 * 60)); // set 1 nam
                 // Thiết lập cookie ten_dang_nhap với thời gian hết hạn là 2 tháng
@@ -71,7 +71,7 @@
                                     </p>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Tên đăng nhập</label>
+                                    <label for="exampleInputPassword1">Mật khẩu</label>
                                     <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Mật khẩu">
                                     <p class="text-danger fs-6 mt-2">
                                         <?= isset($err_password) && $err_password ? $err_password : '' ?>
@@ -84,7 +84,7 @@
                                     <a href="#" class="auth-link text-black" onclick="alert('Thông báo với quản trị viên để cung cấp mật khẩu')">Quên mật khẩu?</a>
                                 </div>
                                 <div class="text-center mt-4 fw-light">
-                                    Bạn không có tài khoản? <a href="register.html" class="text-primary">Đăng ký</a>
+                                    Bạn không có tài khoản? <a href="?act=dangky" class="text-primary">Đăng ký</a>
                                 </div>
                             </form>
                         </div>

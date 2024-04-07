@@ -69,7 +69,7 @@
                                     </div>
                                     <!-- Xử lý phần danh sách danh mục -->
                                     <?php
-                                        $sql = "SELECT * FROM danhmuc";
+                                        $sql = "SELECT * FROM danhmuc ORDER BY id_danh_muc DESC";
                                         $result = mysqli_query($conn,$sql);
                                     ?>
                                     <div class="table-responsive">

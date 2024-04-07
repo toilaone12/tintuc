@@ -43,8 +43,8 @@
                         <span class="rounded bg-danger badge"><?=$chu_cai_dau_ten_nd?></span>
                         <p class="mb-1 mt-3 font-weight-semibold"><?=$_COOKIE['ten_dang_nhap']?></p>
                     </div>
-                    <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i>Hồ sơ của tôi</a>
-                    <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+                    <a href="?act=hosocanhan" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i>Hồ sơ của tôi</a>
+                    <a href="?act=dangxuat" class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Đăng xuất</a>
                 </div>
             </li>
         </ul>

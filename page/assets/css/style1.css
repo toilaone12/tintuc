@@ -1,0 +1,26 @@
+.hover-news:hover{
+    color: #2d67ad !important;
+}
+.button-comment {
+    font-size: 13px;
+    background-color: #2d67ad;
+    color: #fff;
+    padding: 6px 25px;
+    outline: none;
+    border: 0;
+    border-radius: 3px;
+}
+.hover-cate:hover{
+    color: #2d67ad !important;
+}
+.bg-category{
+    background-color: #ee4d2d;
+    color: #fff;
+    padding: 3px 12px;
+    font-size: 13px;
+    border-radius: 2px;
+    display: inline-block;
+}
+.about-right a {
+    color:#2d67ad !important;
+}

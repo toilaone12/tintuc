@@ -1,0 +1,20 @@
+//LƯU Ý
+LINK CHẠY ADMIN: ĐỂ FOLDER HTDOCS CỦA XAMPP LÀ tintuc (CÁI NÀY TÙY VÀO ĐẶT TÊN FOLDER NẾU FOLDER LÀ "abc" THÌ LINK LÀ http://localhost/abc/index.php & http://localhost/abc/page/index.php) 
+=> THÌ LINK URL CỦA TRANG QUẢN TRỊ LÀ "http://localhost/tintuc/index.php" CÒN TRANG GIAO DIỆN NGƯỜI DÙNG LÀ "http://localhost/tintuc/page/index.php"
+SAU LIMIT THÌ (VD LIMIT 0,5 THÌ CÁI 1 LÀ VỊ TRÍ LẤY, CÁI 2 LÀ SỐ BẢN GHI MUỐN LẤY) => SẼ LẤY TỪ VÍ TRỊ 0 (LÀ VỊ TRÍ ĐẦU BẢN GHI VÀ LẤY RA 5 BẢN GHI)
+- MỘT SỐ PHƯƠNG THỨC
++ ceil(): làm tròn số thập phân lên
++ mysqli_query: thực hiện truy vấn trên phpmyadmin
++ mysqli_connet: kết nối database
++ num_rows: đếm số bản ghi dữ liệu khi truy vấn
++ mysqli_real_escape_string: chuẩn hóa chuỗi ký tự đặc biệt trong dữ liệu database
++ isset: sẽ kiểm tra sự tồn tại của 1 biến
++ move_uploaded_file: sẽ là chuyển file vào thư mục folder (cái 1 là thông tin file, cái 2 là đường dẫn)
++ mysqli_error: sẽ báo lỗi nếu truy vấn sai
++ mysqli_fetch_assoc: sẽ tìm và trả về một dòng kết quả của một truy vấn MySQL nào đó dưới dạng một mảng kết hợp (mảng này có key và value thì key sẽ là tên trường trên 1 bảng vd như id_tin_tuc còn value sẽ là kết quả của key đó).
++ file_exists: ktra đường dẫn đó có tồn tại không
++ unlink: xóa file đó
+* Nếu gặp phải ? : thì nó là viết tắt của câu điều kiện 3 ngôi: if(dk1){}else{} (viết đầy đủ là như này)
+- Đối với bộ gõ trong thêm và sửa bài viết
+Cứ copy trên 1 trang báo điện tử
+Ảnh thì chọn biểu tượng hình ảnh trên bộ gõ, rồi copy link url ảnh paste vào link bộ gỡ, chỉ cần chỉnh width (chiều ngang là 700) xong ấn xác nhận là ra Ảnh
